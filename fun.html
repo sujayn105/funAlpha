@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+      }
+      #display {
+        font-size: 36px;
+        text-align: center;
+        transition: all 1s;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes flash {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      @keyframes dance {
+        0% { transform: translateX(0%) rotate(0deg); }
+        20% { transform: translateX(20%) rotate(20deg); }
+        40% { transform: translateX(-20%) rotate(-20deg); }
+        60% { transform: translateX(-20%) rotate(20deg); }
+        80% { transform: translateX(20%) rotate(-20deg); }
+        100% { transform: translateX(0%) rotate(0deg); }
+      }
+      @keyframes zoom {
+        from { transform: scale(1); }
+        to { transform: scale(1.5); }
+      }
+      @keyframes jump {
+        from { transform: translateY(0%); }
+        50% { transform: translateY(-20%); }
+        to { transform: translateY(0%); }
+      }
+    </style>
+    <script>
+      const colors = [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "indigo",
+        "violet"
+      ];
+      const animations = [
+        "spin",
+        "flash",
+        "dance",
+        "zoom",
+        "jump"
+      ];
+      const fonts = [
+        "Arial",
+        "Verdana",
+        "Times New Roman",
+        "Comic Sans MS",
+        "Courier New",
+        "Georgia"
+      ];
+
+      let currentUtterance = null;
+
+      document.addEventListener("keypress", event => {
+        const key = event.key.toUpperCase();
+        if (/^[a-zA-Z0-9]$/.test(key)) {
+          const display = document.getElementById("display");
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
+          display.style.color = color;
+          display.inner
+          display.style.fontSize = "86px";
+          display.style.fontFamily = fontFamily;
+          display.innerHTML = key;
+          const utterance = new SpeechSynthesisUtterance(key);
+		  window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(utterance);
+          currentUtterance = utterance;
+          setTimeout(() => {
+            display.style.animationName = animations[
+              Math.floor(Math.random() * animations.length)
+            ];
+          }, 100);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="display"></div>
+  </body>
+</html>
